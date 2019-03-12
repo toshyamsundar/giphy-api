@@ -25,5 +25,30 @@
     <script src="./assets/js/giphy.js"></script>
     <title>Giphy API</title>
   </head>
-  <body></body>
+  <body>
+    <div class="container-fluid">
+      <div class="row mt-2 mx-0 p-2" id="category-section">
+        <div class="column d-flex flex-wrap" id="btn-section"></div>
+      </div>
+      <form>
+        <div class="row mt-2 mx-0">
+          <div class="column col-3"></div>
+          <div class="column col-6">
+            <div class="row m-1">
+              <div class="column col-8">
+                <input type="text" class="form-control" placeholder="Add more categories.." id="new-category" />
+              </div>
+              <div class="column col-4">
+                <button type="button" class="btn btn-info" id="add-category">Add..</button>
+              </div>
+            </div>
+          </div>
+          <div class="column col-3"></div>
+        </div>
+      </form>
+      <div class="row mt-4 mx-0">
+        <div class="column d-flex flex-wrap" id="giphy-section"></div>
+      </div>
+    </div>
+  </body>
 </html>
