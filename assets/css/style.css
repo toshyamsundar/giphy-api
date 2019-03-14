@@ -8,3 +8,9 @@ label {
 .form-check-input {
   margin-top: 1.4rem;
 }
+
+h4 {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bolder;
+  color: #17a2b8;
+}

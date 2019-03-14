@@ -1,27 +1,27 @@
 $(document).ready(function() {
   var giphyCategories = [
-    "Actions",
-    "Adjectives",
-    "Animals",
+    "Puppies",
+    "Cats",
     "Anime",
+    "Avengers",
     "Cartoons",
-    "Emotions",
     "Food",
-    "Drink",
-    "Gaming",
+    "Game",
     "Holidays",
-    "Interests",
-    "Memes",
     "Movies",
     "Music",
     "Nature",
     "Politics",
-    "Reactions",
     "Science",
     "Sports",
-    "Stickers"
+    "Stickers",
+    "Batman",
+    "Ironman",
+    "Cool"
   ];
 
+  var giphySearchText;
+  var localGiphyCollection = [];
   var counter = 0;
 
   var addButton = (sectionId, category) => {
@@ -36,31 +36,50 @@ $(document).ready(function() {
   };
 
   var displayGiphy = giphyObject => {
+    if ($("#overwrite-giphy").is(":checked")) {
+      clearAllGiphy();
+    }
+
     for (i = 0; i < 10; i++) {
       var cardDiv = $("<div>");
+      var cardHeader = $("<div>");
+      var cardImg = $("<img>");
+      var cardBodyDiv = $("<div>");
+
+      var localGiphyObject = {};
+
+      localGiphyObject.category = giphySearchText;
+      localGiphyObject.still_img_url = giphyObject.data[i].images.fixed_width_small_still.url;
+      localGiphyObject.gif_img_url = giphyObject.data[i].images.fixed_width_small.url;
+      localGiphyObject.index = counter;
+
+      localGiphyCollection.push(localGiphyObject);
+
       $(cardDiv).addClass("card m-1 border border-info");
       $(cardDiv).attr("style", "width: 18rem; height: 18rem;");
-      $(cardDiv).attr("data-index", i);
+      $(cardDiv).attr("data-index", counter);
+      $(cardDiv).attr("data-still", "true");
 
-      var cardImg = $("<img>");
+      $(cardHeader).addClass("card-header");
+      $(cardHeader).text("Rating: " + giphyObject.data[i].rating.toUpperCase());
+
       $(cardImg).addClass("card-img-top");
       $(cardImg).attr("src", giphyObject.data[i].images.fixed_width_small_still.url);
-      // $(cardImg).attr("height", giphyObject.data[counter].images.fixed_width_small.height);
-      // $(cardImg).attr("width", giphyObject.data[counter].images.fixed_width_small.width);
 
-      var cardBodyDiv = $("<div>");
       $(cardBodyDiv).addClass("card-body");
 
       // var pElem = $("<p>");
       // $(pElem).addClass("card-text");
       // $(pElem).text("Rating: " + giphyObject.data[counter].rating.toUpperCase());
-
+      $(cardDiv).append(cardHeader);
       $(cardDiv).append(cardImg);
       $(cardDiv).append(cardBodyDiv);
       // $(cardBodyDiv).append(pElem);
-
       $("#giphy-section").append(cardDiv);
+      counter++;
     }
+
+    console.log(localGiphyCollection);
   };
 
   var getGiphy = queryURL => {
@@ -79,25 +98,41 @@ $(document).ready(function() {
 
   $("#add-category").on("click", function(event) {
     event.preventDefault();
-    if ($("#new-category").val() !== "") {
-      addButton("#btn-section", $("#new-category").val());
+    var newCategory = $("#new-category")
+      .val()
+      .trim();
+
+    if (newCategory !== "" && !giphyCategories.includes(newCategory)) {
+      addButton("#btn-section", newCategory);
       $("#new-category").val("");
+      giphyCategories.push(newCategory);
     }
   });
 
   $(document).on("click", ".btn-category", function(event) {
     event.preventDefault();
-    var giphySearchText = $(this).attr("data-category");
+    giphySearchText = $(this).attr("data-category");
     var queryURL =
       "https://api.giphy.com/v1/stickers/search?api_key=CkOnYrZDVfDnhIjoycKbUC3AgNRmvJfU&q=" + giphySearchText;
     getGiphy(queryURL);
   });
 
-  $("#clear-giphy").on("click", function() {
+  var clearAllGiphy = () => {
+    localGiphyCollection = [];
+    counter = 0;
     $("#giphy-section").empty();
+  };
+
+  $("#clear-giphy").on("click", function() {
+    clearAllGiphy();
   });
 
   giphyCategories.forEach(category => {
     addButton("#btn-section", category);
+  });
+
+  $(document).on("click", ".card", function() {
+    if ($(this).attr(data - still) === "true") {
+    }
   });
 });
