@@ -68,13 +68,10 @@ $(document).ready(function() {
 
       $(cardBodyDiv).addClass("card-body");
 
-      // var pElem = $("<p>");
-      // $(pElem).addClass("card-text");
-      // $(pElem).text("Rating: " + giphyObject.data[counter].rating.toUpperCase());
       $(cardDiv).append(cardHeader);
       $(cardDiv).append(cardImg);
       $(cardDiv).append(cardBodyDiv);
-      // $(cardBodyDiv).append(pElem);
+
       $("#giphy-section").append(cardDiv);
       counter++;
     }
@@ -132,7 +129,18 @@ $(document).ready(function() {
   });
 
   $(document).on("click", ".card", function() {
-    if ($(this).attr(data - still) === "true") {
+    var index = $(this).attr("data-index");
+
+    if ($(this).attr("data-still") === "true") {
+      $(this)
+        .children("img")
+        .attr("src", localGiphyCollection[index].gif_img_url);
+      $(this).attr("data-still", "false");
+    } else {
+      $(this)
+        .children("img")
+        .attr("src", localGiphyCollection[index].still_img_url);
+      $(this).attr("data-still", "true");
     }
   });
 });
