@@ -22,6 +22,8 @@ $(document).ready(function() {
     "Stickers"
   ];
 
+  var counter = 0;
+
   var addButton = (sectionId, category) => {
     var buttonElem = $("<button>");
 
@@ -33,6 +35,34 @@ $(document).ready(function() {
     $(sectionId).append(buttonElem);
   };
 
+  var displayGiphy = giphyObject => {
+    for (i = 0; i < 10; i++) {
+      var cardDiv = $("<div>");
+      $(cardDiv).addClass("card m-1 border border-info");
+      $(cardDiv).attr("style", "width: 18rem; height: 18rem;");
+      $(cardDiv).attr("data-index", i);
+
+      var cardImg = $("<img>");
+      $(cardImg).addClass("card-img-top");
+      $(cardImg).attr("src", giphyObject.data[i].images.fixed_width_small_still.url);
+      // $(cardImg).attr("height", giphyObject.data[counter].images.fixed_width_small.height);
+      // $(cardImg).attr("width", giphyObject.data[counter].images.fixed_width_small.width);
+
+      var cardBodyDiv = $("<div>");
+      $(cardBodyDiv).addClass("card-body");
+
+      // var pElem = $("<p>");
+      // $(pElem).addClass("card-text");
+      // $(pElem).text("Rating: " + giphyObject.data[counter].rating.toUpperCase());
+
+      $(cardDiv).append(cardImg);
+      $(cardDiv).append(cardBodyDiv);
+      // $(cardBodyDiv).append(pElem);
+
+      $("#giphy-section").append(cardDiv);
+    }
+  };
+
   var getGiphy = queryURL => {
     $.ajax({
       url: queryURL,
@@ -40,6 +70,7 @@ $(document).ready(function() {
     })
       .then(function(giphyResponse) {
         console.log(giphyResponse);
+        displayGiphy(giphyResponse);
       })
       .catch(function(errResponse) {
         console.log(errResponse);
@@ -60,6 +91,10 @@ $(document).ready(function() {
     var queryURL =
       "https://api.giphy.com/v1/stickers/search?api_key=CkOnYrZDVfDnhIjoycKbUC3AgNRmvJfU&q=" + giphySearchText;
     getGiphy(queryURL);
+  });
+
+  $("#clear-giphy").on("click", function() {
+    $("#giphy-section").empty();
   });
 
   giphyCategories.forEach(category => {

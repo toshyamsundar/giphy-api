@@ -1,3 +1,10 @@
-#category-section {
-  border: 3px solid rgb(5, 5, 70);
+label {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bolder;
+  font-size: 1.2rem;
+  margin-top: 0.7rem;
+}
+
+.form-check-input {
+  margin-top: 1.4rem;
 }
